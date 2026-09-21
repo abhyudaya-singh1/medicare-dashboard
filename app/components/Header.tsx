@@ -1,5 +1,8 @@
 'use client';
 
+import { useState } from 'react';
+import NotificationsDrawer from './NotificationsDrawer';
+import { notifications } from '../data/notifications';
 import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -20,7 +23,12 @@ const titles: Record<string, string> = {
 
 export default function Header() {
   const pathname = usePathname();
-  const title = titles[pathname] ?? 'Dashboard';
+    const title = pathname.startsWith('/patients/')
+    ? 'Patient Details'
+    : (titles[pathname] ?? 'Dashboard');
+
+    const [open, setOpen] = useState(false);
+  const unread = notifications.filter((n) => n.unread).length;
 
   return (
     <Box
@@ -72,12 +80,14 @@ export default function Header() {
             border: 1,
             borderColor: 'divider',
           }}
+          onClick={() => setOpen(true)}
         >
           <Badge
-            variant="dot"
-            overlap="circular"
-            sx={{ '& .MuiBadge-badge': { bgcolor: '#D97973' } }}
-          >
+  variant="dot"
+  overlap="circular"
+  invisible={unread === 0}
+  sx={{ '& .MuiBadge-badge': { bgcolor: '#D97973' } }}
+>
             <NotificationsNoneIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
           </Badge>
         </IconButton>
@@ -96,6 +106,7 @@ export default function Header() {
           DS
         </Avatar>
       </Box>
+            <NotificationsDrawer open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 }
