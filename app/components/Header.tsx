@@ -1,5 +1,13 @@
 'use client';
 
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlined';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import NotificationsDrawer from './NotificationsDrawer';
 import { notifications } from '../data/notifications';
@@ -29,6 +37,8 @@ export default function Header() {
 
     const [open, setOpen] = useState(false);
   const unread = notifications.filter((n) => n.unread).length;
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const profileOpen = Boolean(anchorEl);
 
   return (
     <Box
@@ -91,20 +101,82 @@ export default function Header() {
             <NotificationsNoneIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
           </Badge>
         </IconButton>
+                <IconButton onClick={(e) => setAnchorEl(e.currentTarget)} sx={{ p: 0 }}>
+            <Avatar
+              sx={{
+                width: 36,
+                height: 36,
+                bgcolor: '#E8F6F3',
+                color: 'primary.main',
+                fontSize: 13,
+                fontWeight: 600,
+              }}
+            >
+              DS
+            </Avatar>
+          </IconButton>
 
-        <Avatar
-          sx={{
-            width: 36,
-            height: 36,
-            bgcolor: '#D7EFEB',
-            color: 'primary.main',
-            fontSize: 13,
-            fontWeight: 600,
-            cursor: 'pointer',
-          }}
-        >
-          DS
-        </Avatar>
+          <Menu
+            anchorEl={anchorEl}
+            open={profileOpen}
+            onClose={() => setAnchorEl(null)}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            slotProps={{
+              paper: {
+                sx: { width: 260, mt: 1, borderRadius: 2 },
+              },
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, px: 2, py: 1.5 }}>
+              <Avatar
+                sx={{
+                  width: 40,
+                  height: 40,
+                  bgcolor: '#E8F6F3',
+                  color: 'primary.main',
+                  fontSize: 13,
+                  fontWeight: 600,
+                }}
+              >
+                DS
+              </Avatar>
+              <Box>
+                <Typography sx={{ fontSize: 14, fontWeight: 600 }}>Dr. Sarah Chen</Typography>
+                <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>
+                  sarah.chen@medicare.io
+                </Typography>
+              </Box>
+            </Box>
+            <Divider />
+            <MenuItem onClick={() => setAnchorEl(null)}>
+              <ListItemIcon>
+                <PersonOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              My Profile
+            </MenuItem>
+            <MenuItem onClick={() => setAnchorEl(null)}>
+              <ListItemIcon>
+                <SettingsOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              Account Settings
+            </MenuItem>
+            <MenuItem onClick={() => setAnchorEl(null)}>
+              <ListItemIcon>
+                <HelpOutlineIcon fontSize="small" />
+              </ListItemIcon>
+              Help & Support
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={() => setAnchorEl(null)} sx={{ color: '#D97973' }}>
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" sx={{ color: '#D97973' }} />
+              </ListItemIcon>
+              Sign Out
+            </MenuItem>
+          </Menu>
+        
+        
       </Box>
             <NotificationsDrawer open={open} onClose={() => setOpen(false)} />
     </Box>
