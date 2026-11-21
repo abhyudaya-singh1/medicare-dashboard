@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Medicare Dashboard
 
-## Getting Started
+A healthcare dashboard UI built with **Next.js, React, TypeScript and Material UI**.
 
-First, run the development server:
+This frontend project demonstrates an overview dashboard, a searchable patient list and patient detail screens backed by local fixture data. It is not connected to a clinical backend and is not intended for real patient records.
 
-```bash
+## Implemented screens
+
+- **Overview:** KPI cards inside a shared dashboard layout.
+- **Patients:** search by name or ID, status filters and links to patient details.
+- **Patient details:** overview/vitals, medical history, appointments and documents tabs.
+- **Notifications:** a notification drawer using local data.
+- **Shared UI:** sidebar, header, status chips, cards and a Material UI theme.
+
+## Local setup
+
+With Node.js and npm installed:
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`npm start` serves an existing production build. No database or API service is configured in this repository.
 
-## Learn More
+## Source map
 
-To learn more about Next.js, take a look at the following resources:
+```text
+app/
+  page.tsx                  # Overview and KPI cards
+  patients/
+    page.tsx
+    PatientsView.tsx        # Search and status filtering
+    [id]/page.tsx           # Patient detail tabs
+  components/               # Shared layout and UI
+  data/                     # Local patient, KPI and notification fixtures
+  theme.ts                  # Material UI theme
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Current scope
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Data comes from checked-in local fixtures, not a live patient system.
+- Controls such as New Patient, Edit Patient, Upload and Download are UI placeholders, not completed record-management workflows.
+- Authentication, backend persistence and automated tests are not included.
+- Use synthetic data only. This is a portfolio UI project, not medical software for clinical use.
 
-## Deploy on Vercel
+## Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Abhyudaya Singh](https://github.com/abhyudaya-singh1)
